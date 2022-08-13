@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+</head>
+
+<body class="container">
+
+    <div id="new-project" >
+        <h3>Add New Project</h3>
+        <div class="row">
+            <div class="col">
+                <input type="text" id="project-name" class="form-control" placeholder="Project Name">
+            </div>
+            <div class="col">
+                <input type="text" id="project-lead" class="form-control" placeholder="Project Lead">
+            </div>
+            <div class="col">
+                <input type="date" id="project-date" class="form-control">
+            </div>
+        </div>
+        <button id="new-project-button" class="btn btn-success form-control">Add Project</button>
+    </div>
+
+    <div id="projectDisplay"></div>
+
+    <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
