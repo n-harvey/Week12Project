@@ -93,6 +93,7 @@ class ProjectManager{
                             return API.getAllProjects()
                         })
                         .then((projects) => this.render(projects))
+                    $(`#${project._id}-member-name`).focus()
                 }
             }
         }
@@ -163,8 +164,8 @@ class ProjectManager{
                                 <h6>Team Members:</h6>
                             </div>
                             <div class="col-3">
-                                <input type="text" id="${project._id}-member-name" placeholder="Team Member">
-                                <button class="btn btn-sm btn-success mt-1"  onclick="ProjectManager.addTeamMember('${project._id}')">Add Team Member</button>
+                                <input type="text" id="${project._id}-member-name" onkeypress="return enterKeyPressed(event)" placeholder="Team Member">
+                                <button type="submit" class="btn btn-sm btn-success mt-1"  onclick="ProjectManager.addTeamMember('${project._id}')">Add Team Member</button>
                             </div>
                         </div>
                     </div>
@@ -237,6 +238,12 @@ $('#removeModal').on('shown.bs.modal', function(event){
         $(this).off('click')
     })
 })
+
+function enterKeyPressed(event){
+    if(event.keyCode == '13'){
+        $(event.target).next('button').trigger('click')
+    }
+}
 
 ProjectManager.getAllProjects()
 
