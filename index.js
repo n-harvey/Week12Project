@@ -1,4 +1,6 @@
-
+// Project class, takes a Project name, Project Lead, and Due date
+// Members array is used to store members working on the project
+// complete variable is used to set a project to complete
 
 class Project {
     constructor(name, lead, date){
@@ -10,12 +12,20 @@ class Project {
     }
 }
 
+//Member class, takes a name, used for creating new members for a project
+
 class Member{
     constructor(name){
         this.name = name
     }
 }
 
+// The API class hosted at crudcrud.com
+// getAllProjects() returns all of the data at the URL
+// getProject() returns a single project using the ID of that project
+// createProject() sends an AJAX POST to the URL updating with new project data
+// deleteProject() send an AJAX DELETE to the URL removing a project by ID
+// updateProject() sends an AJAX PUT to the URL updating a specific project by ID
 
 class API {
     static url = 'https://crudcrud.com/api/b26210a0b46f4379a978d71992a56408/unicorns'
@@ -57,6 +67,17 @@ class API {
         })
     }
 }
+
+// ProjectManager class handles the rendering of the DOM
+// render() takes a param of projects and then uses for of loop to iterate through the data and append each project to the DOM
+// Projects that are completed == false are rendered into the currentProjectDisplay
+// Projects that are completed == true are rendered into the completedProjectDisplay
+// getAllProjects() calls the API then uses the data and calls the render() function
+// newProject() takes params of Name, Lead, and Date from the inputs and created a new project, sends it to the API, then renders the updated DOM
+// removeProject() calls the API delete method passing in an ID then renders the updated DOM
+// addTeamMember() adds a new team member to the project.members array then send an update call to the API then renders the updated DOM
+// deleteTeamMember() removed a team member using project ID and member name, searching through projects to find the correct project then looks for the matching name in the array
+// completeProject() marks a project completing using project ID, moving the competed projected to the completedProjectDisplay
 
 class ProjectManager{
 
@@ -220,6 +241,8 @@ class ProjectManager{
     }
 }
 
+// Listenerevent for the new project button, on click will created a new project using the inputs then set the inputs back to empty string
+
 $('#new-project-button').on('click', function(){
     if($('#project-name').val() !== '' && $('#project-name').val() !== '' && $('#project-date').val() !== ''){
     ProjectManager.newProject($('#project-name').val(), $('#project-lead').val(), $('#project-date').val())
@@ -229,8 +252,9 @@ $('#new-project-button').on('click', function(){
     }
 })
 
+// Modal event that occurs when remove button is pressed, adds confirmation to removing a project. 
+
 $('#removeModal').on('shown.bs.modal', function(event){
-    console.log('show-bs-modal')
     var id = $(event.relatedTarget).parent().parent().parent().parent().attr('id')
     $('#confirmRemove').on('click', function(){
         console.log(`Removing project ${id}`)
@@ -239,12 +263,14 @@ $('#removeModal').on('shown.bs.modal', function(event){
     })
 })
 
+// KeyPressEvent for addTeamMember, allows for enter to be used to submit new team member instead of needing to click the button
+
 function enterKeyPressed(event){
     if(event.keyCode == '13'){
         $(event.target).next('button').trigger('click')
     }
 }
 
-ProjectManager.getAllProjects()
+// Render the DOM
 
-//onclick="ProjectManager.removeProject('${project._id}')
+ProjectManager.getAllProjects()
