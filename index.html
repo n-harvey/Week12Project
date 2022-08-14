@@ -1,55 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Manager</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
-</head>
-
-<body class="container">
+  </head>
+  <body class="container">
+    <!-- Remove Project Confirmation Modal -->
     <div class="modal" id="removeModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Remove Project</h5>
-              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p>Are you sure you want to remove this project?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" id="confirmRemove" data-bs-dismiss="modal">Remove</button>
-            </div>
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Remove Project</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to remove this project?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger" id="confirmRemove" data-bs-dismiss="modal">Remove</button>
           </div>
         </div>
       </div>
-    <div id="new-project" >
-        <h3>Project Manager</h3>
-        <div class="row">
-            <div class="col-sm">
-                <input type="text" id="project-name" class="form-control" placeholder="Project Name">
-            </div>
-            <div class="col-sm">
-                <input type="text" id="project-lead" class="form-control" placeholder="Project Lead">
-            </div>
-            <div class="col-sm">
-                <input type="date" id="project-date" class="form-control">
-            </div>
-        </div>
-        <button id="new-project-button" class="btn btn-success form-control mt-1">Add Project</button>
     </div>
-
+    <!-- Create new project  -->
+    <div id="new-project">
+      <h3>Project Manager</h3>
+      <div class="row">
+        <div class="col-sm">
+          <input type="text" id="project-name" class="form-control" placeholder="Project Name">
+        </div>
+        <div class="col-sm">
+          <input type="text" id="project-lead" class="form-control" placeholder="Project Lead">
+        </div>
+        <div class="col-sm">
+          <input type="date" id="project-date" class="form-control">
+        </div>
+      </div>
+      <button id="new-project-button" class="btn btn-success form-control mt-1">Add Project</button>
+    </div>
+    <!-- Project display -->
     <div id="currentProjectDisplay"></div>
     <div id="completedProjectDisplay"></div>
-
     <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="index.js"></script>
-</body>
+  </body>
 </html>

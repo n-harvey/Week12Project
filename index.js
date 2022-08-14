@@ -3,21 +3,21 @@
 // complete variable is used to set a project to complete
 
 class Project {
-    constructor(name, lead, date){
-        this.name = name
-        this.lead = lead
-        this.members = []
-        this.date = date
-        this.complete = false
-    }
+	constructor(name, lead, date) {
+		this.name = name
+		this.lead = lead
+		this.members = []
+		this.date = date
+		this.complete = false
+	}
 }
 
 //Member class, takes a name, used for creating new members for a project
 
-class Member{
-    constructor(name){
-        this.name = name
-    }
+class Member {
+	constructor(name) {
+		this.name = name
+	}
 }
 
 // The API class hosted at crudcrud.com
@@ -28,44 +28,44 @@ class Member{
 // updateProject() sends an AJAX PUT to the URL updating a specific project by ID
 
 class API {
-    static url = 'https://crudcrud.com/api/b26210a0b46f4379a978d71992a56408/unicorns'
+	static url = 'https://crudcrud.com/api/b26210a0b46f4379a978d71992a56408/unicorns'
 
-    static getAllProjects(){
-        return $.get(this.url)
-    }
+	static getAllProjects() {
+		return $.get(this.url)
+	}
 
-    static getProject(id){
-        return $.get(`${this.url}/${id}`)
-    }
+	static getProject(id) {
+		return $.get(`${this.url}/${id}`)
+	}
 
-    static createProject(project){
-        console.log(project)
-        return $.ajax({
-            url: this.url,
-            dataType: 'json',
-            data: JSON.stringify(project),
-            contentType: 'application/json',
-            type: 'POST'
-        })
-    }
+	static createProject(project) {
+		console.log(project)
+		return $.ajax({
+			url: this.url,
+			dataType: 'json',
+			data: JSON.stringify(project),
+			contentType: 'application/json',
+			type: 'POST'
+		})
+	}
 
-    static deleteProject(id){
-        return $.ajax({
-            url: `${this.url}/${id}`,
-            type: 'DELETE'
-        })
-    }
+	static deleteProject(id) {
+		return $.ajax({
+			url: `${this.url}/${id}`,
+			type: 'DELETE'
+		})
+	}
 
-    static updateProject(project){
-        let url = `${this.url}/${project._id}`
-        delete project._id
-        return $.ajax({
-            url: url,
-            data: JSON.stringify(project),
-            contentType: 'application/json',
-            type: 'PUT',
-        })
-    }
+	static updateProject(project) {
+		let url = `${this.url}/${project._id}`
+		delete project._id
+		return $.ajax({
+			url: url,
+			data: JSON.stringify(project),
+			contentType: 'application/json',
+			type: 'PUT',
+		})
+	}
 }
 
 // ProjectManager class handles the rendering of the DOM
@@ -79,91 +79,90 @@ class API {
 // deleteTeamMember() removed a team member using project ID and member name, searching through projects to find the correct project then looks for the matching name in the array
 // completeProject() marks a project completing using project ID, moving the competed projected to the completedProjectDisplay
 
-class ProjectManager{
+class ProjectManager {
 
-    static projects
+	static projects
 
-    static getAllProjects(){
-        API.getAllProjects()
-            .then((projects) => this.render(projects))
-    }
+	static getAllProjects() {
+		API.getAllProjects()
+			.then((projects) => this.render(projects))
+	}
 
-    static newProject(name, lead, date){
-        API.createProject(new Project(name, lead, date))
-            .then(() => {
-                return API.getAllProjects()
-            })
-            .then((projects) => this.render(projects))
-    }
+	static newProject(name, lead, date) {
+		API.createProject(new Project(name, lead, date))
+			.then(() => {
+				return API.getAllProjects()
+			})
+			.then((projects) => this.render(projects))
+	}
 
-    static removeProject(id){
-        API.deleteProject(id)
-            .then(() => {
-                return API.getAllProjects()
-            })
-            .then((projects) => this.render(projects))
-    }
+	static removeProject(id) {
+		API.deleteProject(id)
+			.then(() => {
+				return API.getAllProjects()
+			})
+			.then((projects) => this.render(projects))
+	}
 
-    static addTeamMember(id){
-        for (let project of this.projects) {
-            if($(`#${project._id}-member-name`).val() !== ''){
-                if(id === project._id){
-                    project.members.push(new Member($(`#${project._id}-member-name`).val()))
-                    API.updateProject(project)
-                        .then(() => {
-                            return API.getAllProjects()
-                        })
-                        .then((projects) => this.render(projects))
-                    $(`#${project._id}-member-name`).focus()
-                }
-            }
-        }
-    }
+	static addTeamMember(id) {
+		for (let project of this.projects) {
+			if ($(`#${project._id}-member-name`).val() !== '') {
+				if (id === project._id) {
+					project.members.push(new Member($(`#${project._id}-member-name`).val()))
+					API.updateProject(project)
+						.then(() => {
+							return API.getAllProjects()
+						})
+						.then((projects) => this.render(projects))
+				}
+			}
+		}
+	}
 
-    static deleteTeamMember(id, name){
-        console.log('Running delete team member', id, name)
-        for (const project of this.projects) {
-            if(id === project._id){
-                console.log('Found matching project')
-                for (const member of project.members) {
-                    if(member.name === name){
-                        console.log('found matching name')
-                        project.members.splice(project.members.indexOf(member),1)
-                        API.updateProject(project)
-                            .then(() => {
-                                return API.getAllProjects()
-                            })
-                            .then((projects) => this.render(projects))
-                    }
-                }
-            }
-        }
-    }
+	static deleteTeamMember(id, name) {
+		console.log('Running delete team member', id, name)
+		for (const project of this.projects) {
+			if (id === project._id) {
+				console.log('Found matching project')
+				for (const member of project.members) {
+					if (member.name === name) {
+						console.log('found matching name')
+						project.members.splice(project.members.indexOf(member), 1)
+						API.updateProject(project)
+							.then(() => {
+								return API.getAllProjects()
+							})
+							.then((projects) => this.render(projects))
+					}
+				}
+			}
+		}
+	}
 
-    static completeProject(id){
-        for(const project of this.projects){
-            if(id === project._id){
-                project.complete = true;
-                $(`#${id}`).remove()
-                API.updateProject(project)
-                .then(() => {
-                    return API.getAllProjects()
-                })
-                .then((projects) => this.render(projects))
-            }
-        }
-    }
-    
-    static render(projects){
-        this.projects = projects
-        projects.sort((a,b) => (a.date > b.date) ? 1 : -1)
-        $('#currentProjectDisplay').empty()
-        $('#completedProjectDisplay').empty()
-        for (const project of projects) {
-            console.log(project)
-            if(project.complete === false){
-                $('#currentProjectDisplay').append(
-                    `<br> 
+	static completeProject(id) {
+		for (const project of this.projects) {
+			if (id === project._id) {
+				project.complete = true
+				$(`#${id}`).remove()
+				API.updateProject(project)
+					.then(() => {
+						return API.getAllProjects()
+					})
+					.then((projects) => this.render(projects))
+			}
+		}
+	}
+
+	static render(projects) {
+		this.projects = projects
+		projects.sort((a, b) => (a.date > b.date) ? 1 : -1)
+		$('#currentProjectDisplay').empty()
+		$('#completedProjectDisplay').empty()
+		for (const project of projects) {
+			console.log(project)
+			if (project.complete === false) {
+				$('#currentProjectDisplay').append(
+					`<br> 
                     <div id=${project._id}>
                         <div>
                             <div class="row shadow pb-3 border">
@@ -191,18 +190,17 @@ class ProjectManager{
                         </div>
                     </div>
                     `
-                )
-                for(const member of project.members){
-                    $(`#${project._id}`).find('#team-members').append(
-                        `
+				)
+				for (const member of project.members) {
+					$(`#${project._id}`).find('#team-members').append(
+						`
                         <p> <button class="btn btn-danger btn-sm" onclick="ProjectManager.deleteTeamMember('${project._id}', '${member.name}')">-</button>${member.name}</p>
                         `
-                    )
-                }
-            }
-            else if(project.complete === true){
-                $('#completedProjectDisplay').append(
-                    `<br> 
+					)
+				}
+			} else if (project.complete === true) {
+				$('#completedProjectDisplay').append(
+					`<br> 
                     <div id=${project._id} class='completed'>
                         <div>
                             <div class="row shadow pb-3 border">
@@ -228,47 +226,47 @@ class ProjectManager{
                         <button class="btn btn-sm btn-danger mt-1 " onclick="ProjectManager.removeProject('${project._id}')">Remove Project</button>
                     </div>
                     `
-                )
-                for(const member of project.members){
-                    $(`#${project._id}`).find('#team-members').append(
-                        `
+				)
+				for (const member of project.members) {
+					$(`#${project._id}`).find('#team-members').append(
+						`
                         <p>${member.name}</p>
                         `
-                    )
-                }
-            }
-        }
-    }
+					)
+				}
+			}
+		}
+	}
 }
 
 // Listenerevent for the new project button, on click will created a new project using the inputs then set the inputs back to empty string
 
-$('#new-project-button').on('click', function(){
-    if($('#project-name').val() !== '' && $('#project-name').val() !== '' && $('#project-date').val() !== ''){
-    ProjectManager.newProject($('#project-name').val(), $('#project-lead').val(), $('#project-date').val())
-    $('#project-name').val('')
-    $('#project-lead').val('')
-    $('#project-date').val('')
-    }
+$('#new-project-button').on('click', function() {
+	if ($('#project-name').val() !== '' && $('#project-name').val() !== '' && $('#project-date').val() !== '') {
+		ProjectManager.newProject($('#project-name').val(), $('#project-lead').val(), $('#project-date').val())
+		$('#project-name').val('')
+		$('#project-lead').val('')
+		$('#project-date').val('')
+	}
 })
 
 // Modal event that occurs when remove button is pressed, adds confirmation to removing a project. 
 
-$('#removeModal').on('shown.bs.modal', function(event){
-    var id = $(event.relatedTarget).parent().parent().parent().parent().attr('id')
-    $('#confirmRemove').on('click', function(){
-        console.log(`Removing project ${id}`)
-        ProjectManager.removeProject(id)
-        $(this).off('click')
-    })
+$('#removeModal').on('shown.bs.modal', function(event) {
+	var id = $(event.relatedTarget).parent().parent().parent().parent().attr('id')
+	$('#confirmRemove').on('click', function() {
+		console.log(`Removing project ${id}`)
+		ProjectManager.removeProject(id)
+		$(this).off('click')
+	})
 })
 
 // KeyPressEvent for addTeamMember, allows for enter to be used to submit new team member instead of needing to click the button
 
-function enterKeyPressed(event){
-    if(event.keyCode == '13'){
-        $(event.target).next('button').trigger('click')
-    }
+function enterKeyPressed(event) {
+	if (event.keyCode == '13') {
+		$(event.target).next('button').trigger('click')
+	}
 }
 
 // Render the DOM
