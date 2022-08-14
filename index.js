@@ -210,7 +210,7 @@ class ProjectManager{
                 for(const member of project.members){
                     $(`#${project._id}`).find('#team-members').append(
                         `
-                        <p> <button class="btn btn-danger btn-sm" onclick="ProjectManager.deleteTeamMember('${project._id}', '${member.name}')">-</button>${member.name}</p>
+                        <p>${member.name}</p>
                         `
                     )
                 }
