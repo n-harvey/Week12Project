@@ -169,7 +169,7 @@ class ProjectManager {
                                 <div class="col">
                                     <h2>${project.name}</h2>
                                 </div>
-                                <div class="col pt-1">
+                                <div class="col pt-1 text-center">
                                     <button class="btn btn-success" onclick="ProjectManager.completeProject('${project._id}')">Complete Project</button>
                                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeModal">Remove Project</button>
                                 </div>
@@ -183,8 +183,8 @@ class ProjectManager {
                             <div id="team-members">
                                 <h6>Team Members:</h6>
                             </div>
-                            <div class="col-3">
-                                <input type="text" id="${project._id}-member-name" onkeypress="return enterKeyPressed(event)" placeholder="Team Member">
+                            <div class="col-sm">
+                                <input type="text" id="${project._id}-member-name" onkeypress="return enterKeyPressed(event)" placeholder="Team Member"> <br>
                                 <button type="submit" class="btn btn-sm btn-success mt-1"  onclick="ProjectManager.addTeamMember('${project._id}')">Add Team Member</button>
                             </div>
                         </div>
@@ -202,7 +202,7 @@ class ProjectManager {
 				$('#completedProjectDisplay').append(
 					`<br> 
                     <div id=${project._id} class="row shadow pb-3 border">
-                            <div class=" completed">
+                            <div class="row completed">
                                 <div class="col">
                                     <h2>${project.name}</h2>
                                 </div>
