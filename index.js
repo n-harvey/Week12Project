@@ -194,7 +194,7 @@ class ProjectManager {
 				for (const member of project.members) {
 					$(`#${project._id}`).find('#team-members').append(
 						`
-                        <p> <button class="btn btn-danger btn-sm" onclick="ProjectManager.deleteTeamMember('${project._id}', '${member.name}')">-</button>${member.name}</p>
+                        <button class="btn btn-danger btn-sm me-1" onclick="ProjectManager.deleteTeamMember('${project._id}', '${member.name}')">-</button>${member.name}
                         `
 					)
 				}
@@ -240,7 +240,12 @@ class ProjectManager {
 // Listenerevent for the new project button, on click will created a new project using the inputs then set the inputs back to empty string
 
 $('#new-project-button').on('click', function() {
-	if ($('#project-name').val() !== '' && $('#project-name').val() !== '' && $('#project-date').val() !== '') {
+	if($('#project-name').val().indexOf('<') > -1 || $('#project-name').val().indexOf('>') > -1 || $('#project-lead').val().indexOf('<') > -1 || $('#project-lead').val().indexOf('>') > -1){
+		$('#project-name').val('')
+		$('#project-lead').val('')
+		$('#project-date').val('')
+	}
+	else if ($('#project-name').val() !== '' && $('#project-lead').val() !== '' && $('#project-date').val() !== '') {
 		ProjectManager.newProject($('#project-name').val(), $('#project-lead').val(), $('#project-date').val())
 		$('#project-name').val('')
 		$('#project-lead').val('')
