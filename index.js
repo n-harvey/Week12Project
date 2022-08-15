@@ -201,30 +201,28 @@ class ProjectManager {
 			} else if (project.complete === true) {
 				$('#completedProjectDisplay').append(
 					`<br> 
-                    <div id=${project._id} class='completed'>
-                        <div>
-                            <div class="row shadow pb-3 border">
+                    <div id=${project._id} class="row shadow pb-3 border">
+                            <div class=" completed">
                                 <div class="col">
                                     <h2>${project.name}</h2>
                                 </div>
                                 <div class="col pt-1 text-center fw-bold text-success">
                                     PROJECT COMPLETED
                                 </div>
-                            </div>
-                        </div>
-                        <div>
-                            Project Lead: ${project.lead} <br>
-                            Project Due Date: ${project.date}
-                        </div>
-                        <div class="row">
-                            <div id="team-members">
-                                <h6>Team Members:</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <button class="btn btn-sm btn-danger mt-1 " onclick="ProjectManager.removeProject('${project._id}')">Remove Project</button>
-                    </div>
+								<div>
+									Project Lead: ${project.lead} <br>
+									Project Due Date: ${project.date}
+								</div>
+								<div class="row">
+									<div id="team-members">
+										<h6>Team Members:</h6>
+									</div>
+								</div>
+							</div>
+						<div class="col-3">
+							<button class="btn btn-sm btn-danger mt-1 " onclick="ProjectManager.removeProject('${project._id}')">Remove Project</button>
+						</div>
+					</div>
                     `
 				)
 				for (const member of project.members) {
